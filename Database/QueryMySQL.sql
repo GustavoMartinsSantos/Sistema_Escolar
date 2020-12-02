@@ -5,6 +5,8 @@ CREATE TABLE tbl_Pessoa (
     Email VARCHAR(50) PRIMARY KEY,
     Nome VARCHAR(30) NOT NULL,
     Sobrenome VARCHAR(50) NOT NULL,
+    Sexo CHAR(1) NOT NULL
+    CHECK(Sexo = 'M' OR Sexo = 'F' OR Sexo = 'I'),
     Senha CHAR(8) NOT NULL,
     Codigo_Acesso CHAR(10) NOT NULL UNIQUE,
     RG CHAR(9) NOT NULL,
@@ -19,7 +21,7 @@ CREATE TABLE tbl_Pessoa (
 
 CREATE TABLE tbl_Escola (
     ID INT PRIMARY KEY AUTO_INCREMENT,
-    Nome VARCHAR(30) NOT NULL,
+    Nome VARCHAR(50) NOT NULL,
     Estado CHAR(2) NOT NULL,
     Cidade VARCHAR(30) NOT NULL,
     Bairro VARCHAR(30) NOT NULL,
@@ -55,17 +57,17 @@ CREATE TABLE tbl_Telefone (
 );
 
 CREATE TABLE tbl_Estuda (
+	ID INT PRIMARY KEY AUTO_INCREMENT,
     ID_Disciplina INT NOT NULL,
     Email_Pessoa VARCHAR(50) NOT NULL,
-	ID_Turma INT NOT NULL,
-	PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
+    ID_Turma INT NOT NULL
 );
 
 CREATE TABLE tbl_Ensina (
     ID_Disciplina INT,
     Email_Pessoa VARCHAR(50),
-	ID_Turma INT NOT NULL,
-	PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
+    ID_Turma INT NOT NULL,
+    PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
 );
 
 CREATE TABLE tbl_Boletim (
@@ -73,10 +75,9 @@ CREATE TABLE tbl_Boletim (
     Prim_Bim FLOAT,
     Seg_Bim FLOAT,
     Terc_Bim FLOAT,
-	Quar_Bim FLOAT,
+    Quar_Bim FLOAT,
     Faltas INT,
-    Email_Pessoa VARCHAR(50) NOT NULL,
-    ID_Disciplina INT NOT NULL
+    ID_Estudo INT UNIQUE
 );
 
 ALTER TABLE tbl_Escola 
@@ -144,14 +145,7 @@ REFERENCES tbl_Turma(ID)
 ON DELETE CASCADE;
 
 ALTER TABLE tbl_Boletim
-ADD CONSTRAINT FK_Boletim_Pessoa
-FOREIGN KEY (Email_Pessoa)
-REFERENCES tbl_Pessoa(Email)
-ON DELETE CASCADE
-ON UPDATE CASCADE;
-
-ALTER TABLE tbl_Boletim
-ADD CONSTRAINT FK_Boletim_Disciplina
-FOREIGN KEY (ID_Disciplina)
-REFERENCES tbl_Disciplina(ID)
+ADD CONSTRAINT FK_Boletim_Estudo
+FOREIGN KEY (ID_Estudo)
+REFERENCES tbl_Estuda(ID)
 ON DELETE CASCADE;

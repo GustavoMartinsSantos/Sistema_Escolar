@@ -1,5 +1,5 @@
 CREATE DATABASE Sistema_Escolar;
-GO 
+GO
 
 USE Sistema_Escolar;
 GO
@@ -8,6 +8,8 @@ CREATE TABLE tbl_Pessoa (
     Email VARCHAR(50) PRIMARY KEY,
     Nome VARCHAR(30) NOT NULL,
     Sobrenome VARCHAR(50) NOT NULL,
+    Sexo CHAR(1) NOT NULL
+    CHECK(Sexo = 'M' OR Sexo = 'F' OR Sexo = 'I'),
     Senha CHAR(8) NOT NULL,
     Codigo_Acesso CHAR(10) NOT NULL UNIQUE,
     RG CHAR(9) NOT NULL,
@@ -19,10 +21,11 @@ CREATE TABLE tbl_Pessoa (
     Rua VARCHAR(30) NOT NULL,
     Numero INT NOT NULL
 );
+GO
 
 CREATE TABLE tbl_Escola (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Nome VARCHAR(30) NOT NULL,
+    ID INT PRIMARY KEY IDENTITY,
+    Nome VARCHAR(50) NOT NULL,
     Estado CHAR(2) NOT NULL,
     Cidade VARCHAR(30) NOT NULL,
     Bairro VARCHAR(30) NOT NULL,
@@ -30,57 +33,64 @@ CREATE TABLE tbl_Escola (
     Numero INT NOT NULL,
     Email_Pessoa VARCHAR(50)
 );
+GO
 
 CREATE TABLE tbl_Curso (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    ID INT PRIMARY KEY IDENTITY,
     Nome VARCHAR(30) NOT NULL,
     Periodo VARCHAR(20) NOT NULL,
     Carga_Horaria INT
 );
+GO
 
 CREATE TABLE tbl_Disciplina (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    ID INT PRIMARY KEY IDENTITY,
     Nome VARCHAR(30) NOT NULL UNIQUE
 );
+GO
 
 CREATE TABLE tbl_Turma (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    ID INT PRIMARY KEY IDENTITY,
     Nome VARCHAR(20) NOT NULL,
     ID_Curso INT,
     ID_Escola INT NOT NULL
 );
+GO
 
 CREATE TABLE tbl_Telefone (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    ID INT PRIMARY KEY IDENTITY,
     DDD INT NOT NULL,
     Numero CHAR(9) NOT NULL,
     Email_Pessoa VARCHAR(50) NOT NULL
 );
+GO
 
 CREATE TABLE tbl_Estuda (
+	ID INT PRIMARY KEY IDENTITY,
     ID_Disciplina INT NOT NULL,
     Email_Pessoa VARCHAR(50) NOT NULL,
-	ID_Turma INT NOT NULL,
-	PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
+    ID_Turma INT NOT NULL
 );
 
+GO
 CREATE TABLE tbl_Ensina (
     ID_Disciplina INT,
     Email_Pessoa VARCHAR(50),
-	ID_Turma INT NOT NULL,
-	PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
+    ID_Turma INT NOT NULL,
+    PRIMARY KEY(ID_Disciplina, Email_Pessoa, ID_Turma)
 );
+GO
 
 CREATE TABLE tbl_Boletim (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    ID INT PRIMARY KEY IDENTITY,
     Prim_Bim FLOAT,
     Seg_Bim FLOAT,
     Terc_Bim FLOAT,
-	Quar_Bim FLOAT,
+    Quar_Bim FLOAT,
     Faltas INT,
-    Email_Pessoa VARCHAR(50) NOT NULL,
-    ID_Disciplina INT NOT NULL
+    ID_Estudo INT UNIQUE
 );
+GO
 
 ALTER TABLE tbl_Escola 
 ADD CONSTRAINT FK_Escola_Pessoa 
@@ -88,18 +98,21 @@ FOREIGN KEY(Email_Pessoa)
 REFERENCES tbl_Pessoa(Email)
 ON DELETE SET NULL
 ON UPDATE CASCADE;
+GO
 
 ALTER TABLE tbl_Turma
 ADD CONSTRAINT FK_Turma_Curso
 FOREIGN KEY(ID_Curso)
 REFERENCES tbl_Curso(ID)
 ON DELETE SET NULL;
+GO
 
 ALTER TABLE tbl_Turma
 ADD CONSTRAINT FK_Turma_Escola
 FOREIGN KEY(ID_Escola)
 REFERENCES tbl_Escola(ID)
 ON DELETE CASCADE;
+GO
 
 ALTER TABLE tbl_Telefone 
 ADD CONSTRAINT FK_Telefone_Pessoa
@@ -107,12 +120,14 @@ FOREIGN KEY (Email_Pessoa)
 REFERENCES tbl_Pessoa(Email)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+GO
 
 ALTER TABLE tbl_Estuda
 ADD CONSTRAINT FK_Estuda_Disciplina
 FOREIGN KEY (ID_Disciplina)
 REFERENCES tbl_Disciplina(ID)
 ON DELETE CASCADE;
+GO
 
 ALTER TABLE tbl_Estuda
 ADD CONSTRAINT FK_Estuda_Pessoa
@@ -120,18 +135,21 @@ FOREIGN KEY (Email_Pessoa)
 REFERENCES tbl_Pessoa(Email)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+GO
 
 ALTER TABLE tbl_Estuda
 ADD CONSTRAINT FK_Estuda_Turma
 FOREIGN KEY (ID_Turma)
 REFERENCES tbl_Turma(ID)
 ON DELETE CASCADE;
+GO
 
 ALTER TABLE tbl_Ensina
 ADD CONSTRAINT FK_Ensina_Disciplina
 FOREIGN KEY (ID_Disciplina)
 REFERENCES tbl_Disciplina(ID)
 ON DELETE CASCADE;
+GO
 
 ALTER TABLE tbl_Ensina
 ADD CONSTRAINT FK_Ensina_Pessoa
@@ -139,22 +157,17 @@ FOREIGN KEY (Email_Pessoa)
 REFERENCES tbl_Pessoa(Email)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+GO
 
 ALTER TABLE tbl_Ensina
 ADD CONSTRAINT FK_Ensina_Turma
 FOREIGN KEY (ID_Turma)
 REFERENCES tbl_Turma(ID)
 ON DELETE CASCADE;
+GO
 
 ALTER TABLE tbl_Boletim
-ADD CONSTRAINT FK_Boletim_Pessoa
-FOREIGN KEY (Email_Pessoa)
-REFERENCES tbl_Pessoa(Email)
-ON DELETE CASCADE
-ON UPDATE CASCADE;
-
-ALTER TABLE tbl_Boletim
-ADD CONSTRAINT FK_Boletim_Disciplina
-FOREIGN KEY (ID_Disciplina)
-REFERENCES tbl_Disciplina(ID)
+ADD CONSTRAINT FK_Boletim_Estudo
+FOREIGN KEY (ID_Estudo)
+REFERENCES tbl_Estuda(ID)
 ON DELETE CASCADE;
