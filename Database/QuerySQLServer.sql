@@ -9,8 +9,8 @@ CREATE TABLE tbl_Pessoa (
     Nome VARCHAR(30) NOT NULL,
     Sobrenome VARCHAR(50) NOT NULL,
     Sexo CHAR(1) NOT NULL
-    CHECK(Sexo = 'M' OR Sexo = 'F' OR Sexo = 'I'),
-    Senha CHAR(8) NOT NULL,
+    CHECK(Sexo = 'M' OR Sexo = 'F'),
+    Senha VARCHAR(10) NOT NULL,
     Codigo_Acesso CHAR(10) NOT NULL UNIQUE,
     RG CHAR(9) NOT NULL,
     CPF CHAR(11) NOT NULL UNIQUE,

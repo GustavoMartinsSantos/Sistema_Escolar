@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Cadastro</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/form.css">
+    </head>
+    <body>
+        <header>
+            <div id="logo"><a href="#">Grade Yourself</a></div>
+        </header>
+
+        <div id="titulo">Cadastro</div>
+        <form name="formulario" method="POST" action="../PHP/InserirCadastro.php" class="form" autocomplete="off">
+            <label for="email" class="label">E-mail</label> 
+            <input type="email" class="inputs" name="email" size="31" maxlength="50" autofocus required>
+
+            <label for="senha" class="label">Senha</label> 
+            <input type="text" class="inputs" name="senha" size="31" minlength="8" maxlength="10" required>
+
+            <label for="data" class="label">Data de Nascimento</label> 
+            <input type="date" class="inputs" name="data" required id="datas" min="1920-01-01" max="2020-01-01">
+
+            <label for="numero" class="label">Número Residencial</label>
+            <input type="number" class="inputs" id="numero_residencial" name="numero_residencial" required>
+
+            <label for="nome" class="label">Nome</label>
+            <input type="text" class="inputs" name="nome" size="32" maxlength="30" required>
+
+            <label for="cep" class="label">CEP</label>
+            <input type="number" class="inputs" id="cep" name="cep" max="9999999" required>
+            <br>
+
+            <label for="sobrenome" class="label">Sobrenome</label> 
+            <input type="text" class="inputs" name="sobrenome" size="25" maxlength="50" required>
+
+            <label for="sexo" class="label">Sexo</label> 
+                <input type="radio" class="radios" name="sexo" value="M" id="M" required>
+                <label for="M" class="radio-labels">Masculino</label>
+
+                <input type="radio" class="radios" name="sexo" value="F" id="F" required>
+                <label for="F" class="radio-labels">Feminino</label>
+            <br>
+
+            <label for="codigo" class="label">Código de Acesso</label>
+            <input type="text" class="inputs" name="codigo" size="18" minlength="10" maxlength="10" required>
+
+            <label for="rg" class="label">RG</label>
+            <input type="text" class="inputs" name="rg" size="34" minlength="9" maxlength="9" required>
+
+            <label for="telefone" class="label">Telefone</label>
+            <input type="text" class="inputs" name="telefone" size="29" minlength="11" maxlength="11">
+
+            <label for="cpf" class="label">CPF</label>
+            <input type="text" class="inputs" name="cpf" size="33" minlength="11" maxlength="11" required>
+
+            <span class="grupo_botoes">
+                <input type="submit" value="Cadastrar" id="Cadastrar">
+            </span>
+        </form>
+    </body>
+</head>
