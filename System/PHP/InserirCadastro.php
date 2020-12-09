@@ -3,12 +3,16 @@
         // formatar o cep removendo caracteres nao numericos
         $cep = preg_replace("/[^0-9]/", "", $cep);
         $url = "http://viacep.com.br/ws/$cep/xml/";
-      
+
         $xml = simplexml_load_file($url);
+
+        if($xml->erro == true)
+            return false;
+
         return $xml;
     }
 ?>
-<?php if(isset($_POST["cep"])) {
+<?php if(isset($_POST["cep"]) && get_endereco($_POST["cep"]) == true) {
     $endereco = get_endereco($_POST["cep"]); 
     $Rua    = $endereco->logradouro;
     $Bairro = $endereco->bairro;
