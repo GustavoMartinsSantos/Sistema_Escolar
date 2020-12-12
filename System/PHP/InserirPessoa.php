@@ -1,18 +1,17 @@
 <?php
-    function get_endereco($cep){
-        // formatar o cep removendo caracteres nao numericos
-        $cep = preg_replace("/[^0-9]/", "", $cep);
-        $url = "http://viacep.com.br/ws/$cep/xml/";
+  function get_endereco($cep){
+      // formatar o cep removendo caracteres nao numericos
+      $cep = preg_replace("/[^0-9]/", "", $cep);
+      $url = "http://viacep.com.br/ws/$cep/xml/";
 
-        $xml = simplexml_load_file($url);
+      $xml = simplexml_load_file($url);
 
-        if($xml->erro == true)
+      if($xml->erro == true)
             return false;
-
         return $xml;
     }
-?>
-<?php if(isset($_POST["cep"]) && get_endereco($_POST["cep"]) == true) {
+
+  if(isset($_POST["cep"]) && get_endereco($_POST["cep"]) == true) {
     $endereco = get_endereco($_POST["cep"]); 
     $Rua    = $endereco->logradouro;
     $Bairro = $endereco->bairro;
@@ -72,7 +71,6 @@
     $connection = null;
   } else {
     header("Location: ../HTML/cadastro.html");
-
     die();
   }
 ?>
