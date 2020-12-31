@@ -4,14 +4,14 @@
         <meta charset="UTF-8">
         <link type="image/x-icon" rel="shortcut icon" href="../IMG/logo-icone.ico">
         <link rel="stylesheet" type="text/css" href="../CSS/index.css">
-        <link rel="stylesheet" type="text/css" href="../CSS/tela-inicial.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/login.css">
     </head>
     <body>
         <header>
             <div id="logo">Grade Yourself</div>
         </header>
 
-        <form name="tela-inicial" method="POST" id="tela-inicial" action="#">
+        <form name="tela-inicial" method="POST" id="tela-inicial" action="../PHP/Login.php">
             <center><img src="../IMG/Logo.png"></img></center>
             
             <label for="email">E-mail</label>
@@ -23,8 +23,8 @@
             <span class="grupo_botoes">
                 <input type="submit" id="Entrar" value="Entrar">
             </span>
-
-            <center><a href="#">Esqueci minha senha</a></center>
+            <a href="#" class="links_iniciais">Esqueci minha senha</a>
+            <a href="cadastro.html" class="links_iniciais">Criar uma conta</a>
         </form>
     </body>
 </html>
