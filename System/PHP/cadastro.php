@@ -12,24 +12,27 @@
     }
 
   if(isset($_POST["cep"]) && get_endereco($_POST["cep"]) == true) {
-    $endereco = get_endereco($_POST["cep"]); 
+    $endereco = get_endereco($_POST["cep"]);
     $Rua    = $endereco->logradouro;
     $Bairro = $endereco->bairro;
     $Cidade = $endereco->localidade;
     $Estado = $endereco->uf;
 
+    $mascaras_campo = array(" ",".","(",")","-");
+
     $Email         = $_POST["email"];
-    $Senha         = $_POST['senha'];
+    $Senha         = str_replace(" ", "", $_POST['senha']);
     $Data_Nasc     = $_POST["data"];
     $Num           = $_POST["numero_residencial"];
-    $Nome          = $_POST["nome"];
+    $Nome          = str_replace(" ", "", $_POST["nome"]);
     $Sobrenome     = $_POST["sobrenome"];
     $Sexo          = $_POST["sexo"];
     $Codigo_Acesso = $_POST["codigo"];
-    $RG            = $_POST["rg"];
-    $CPF           = $_POST["cpf"];
-    $DDD           = intval(substr($_POST["telefone"], 0, 2));
-    $Telefone      = $_POST["telefone"];
+    $RG            = str_replace($mascaras_campo, "", $_POST["rg"]);
+    $CPF           = str_replace($mascaras_campo, "", $_POST["cpf"]);
+    $DDD           = intval(substr($_POST["telefone"], 1, 2));
+    $Telefone      = substr(str_replace($mascaras_campo, "", $_POST["telefone"]), 2, 9);
+    $Tipo_telefone = $_POST["tipo_telefone"];
 
     require("../../../ConexaoSQLServer/Connection.php");
     
@@ -48,6 +51,7 @@
                   @CPF           = '{$CPF}',
                   @DDD           = {$DDD},
                   @Telefone      = '{$Telefone}',
+                  @Tipo          = '{$Tipo_telefone}',
                   @Estado        = '{$Estado}',
                   @Cidade        = '{$Cidade}',
                   @Bairro        = '{$Bairro}',

@@ -60,7 +60,9 @@ GO
 CREATE TABLE tbl_Telefone (
     ID INT PRIMARY KEY IDENTITY,
     DDD INT NOT NULL,
-    Numero CHAR(9) NOT NULL,
+	Telefone CHAR(9) NOT NULL,
+	Tipo CHAR(3) 
+	CHECK(Tipo = 'CEL' OR Tipo = 'RES') NOT NULL,
     Email_Pessoa VARCHAR(50) NOT NULL
 );
 GO

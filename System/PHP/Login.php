@@ -23,14 +23,11 @@
 
         // transforma a consulta em um array  
         $row = $stmt->fetchAll();
-        if($row == FALSE) {
-          /*header("Location: ../HTML/index.html");
-          die();*/
-          header("Location: ../PHP/Escolas.php");
+        if($row == false) {
+          header("Location: ../HTML/index.html");
         } else {
           session_start();
           $_SESSION['user'] = $row[0]['Nome'];
-
           header("Location: ../PHP/Escolas.php");
         }
     } catch(Exception $e) {

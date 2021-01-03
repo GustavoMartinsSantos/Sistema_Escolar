@@ -6,6 +6,9 @@
         <link type="image/x-icon" rel="shortcut icon" href="../IMG/logo-icone.ico">
         <link rel="stylesheet" type="text/css" href="../CSS/index.css">
         <link rel="stylesheet" type="text/css" href="../CSS/cadastro.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+        <script src="../JS/Validacao_Form.js"></script>
     </head>
     <body>
         <header>
@@ -13,52 +16,72 @@
         </header>
 
         <div id="titulo">Cadastro</div>
-        <form name="cadastro" method="POST" action="../PHP/InserirPessoa.php" autocomplete="off">
+        <form name="cadastro" method="POST" action="../PHP/cadastro.php" onSubmit="return valida_form()" autocomplete="off">
             <label for="email" class="label">E-mail</label> 
-            <input type="email" class="inputs" name="email" size="31" maxlength="50" autofocus required>
+            <input type="email" class="inputs" id="email" name="email" size="31"  autofocus>
 
             <label for="senha" class="label">Senha</label> 
-            <input type="text" class="inputs" name="senha" size="31" minlength="8" maxlength="10" required>
+            <input type="text" class="inputs" id="senha" name="senha" size="31" minlength="8" maxlength="10">
 
             <label for="data" class="label">Data de Nascimento</label> 
-            <input type="date" class="inputs" name="data" required id="datas" min="1920-01-01" max="2020-01-01">
+            <input type="date" class="inputs" name="data" id="datas" min="1920-01-01" max="2020-01-01">
 
             <label for="numero" class="label">Número Residencial</label>
-            <input type="number" class="inputs" id="numero_residencial" name="numero_residencial" required>
+            <input type="number" class="inputs" id="numero_residencial" name="numero_residencial">
 
             <label for="nome" class="label">Nome</label>
-            <input type="text" class="inputs" name="nome" size="32" maxlength="30" required>
+            <input type="text" class="inputs" id="nome" name="nome" size="32" maxlength="30">
 
             <label for="cep" class="label">CEP</label>
-            <input type="number" class="inputs" id="cep" name="cep" max="9999999" required>
+            <input type="text" class="inputs" id="cep" name="cep">
             <br>
 
             <label for="sobrenome" class="label">Sobrenome</label> 
-            <input type="text" class="inputs" name="sobrenome" size="25" maxlength="50" required>
+            <input type="text" class="inputs" id="sobrenome" name="sobrenome" size="25" maxlength="50">
 
             <label for="sexo" class="label">Sexo</label> 
-                <input type="radio" class="radios" name="sexo" value="M" id="M" required>
+                <input type="radio" class="radios" name="sexo" value="M" id="M">
                 <label for="M" class="radio-labels">Masculino</label>
 
-                <input type="radio" class="radios" name="sexo" value="F" id="F" required>
+                <input type="radio" class="radios" name="sexo" value="F" id="F">
                 <label for="F" class="radio-labels">Feminino</label>
             <br>
 
             <label for="codigo" class="label">Código de Acesso</label>
-            <input type="text" class="inputs" name="codigo" size="18" minlength="10" maxlength="10" required>
+            <input type="text" class="inputs" id="codigo" name="codigo" size="18" minlength="10" maxlength="10">
 
             <label for="rg" class="label">RG</label>
-            <input type="text" class="inputs" name="rg" size="34" minlength="9" maxlength="9" required>
+            <input type="text" class="inputs" id="rg" name="rg" size="34" pattern=".{12,}" maxlength="9">
 
             <label for="telefone" class="label">Telefone</label>
-            <input type="text" class="inputs" name="telefone" size="29" minlength="11" maxlength="11">
+            <input type="text" class="inputs" id="telefone" name="telefone" size="14" pattern=".{14,}">
+
+            <select class="inputs" id="tipo_telefone" name="tipo_telefone">
+                <option value='CEL'>Celular</option>
+                <option value='RES'>Residencial</option>
+            <select>
 
             <label for="cpf" class="label">CPF</label>
-            <input type="text" class="inputs" name="cpf" size="33" minlength="11" maxlength="11" required>
+            <input type="text" class="inputs" id="cpf" name="cpf" size="33" pattern=".{14,}">
 
             <span class="grupo_botoes">
                 <input type="submit" value="Cadastrar" id="Cadastrar">
             </span>
         </form>
+        <script>
+            var SPMaskBehavior = function (val) {
+                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+                }
+            };
+
+            $('#telefone').mask(SPMaskBehavior, spOptions);
+            $("#cep").mask("00000-000");
+            $("#rg").mask("00.000.000-0", {reverse: true});
+            $("#cpf").mask("000.000.000-00", {reverse: true});
+        </script>
     </body>
 </html>
