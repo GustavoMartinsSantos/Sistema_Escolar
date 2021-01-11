@@ -1,22 +1,12 @@
 <?php
-  function get_endereco($cep){
-      // formatar o cep removendo caracteres nao numericos
-      $cep = preg_replace("/[^0-9]/", "", $cep);
-      $url = "http://viacep.com.br/ws/$cep/xml/";
+    session_start();
 
-      $xml = simplexml_load_file($url);
+    if(!isset($_SESSION['user']))
+        header("Location: ../HTML/index.html");
 
-      if($xml->erro == true)
-            return false;
-        return $xml;
-    }
+    require("../../../ConexaoSQLServer/Connection.php");
 
-  if(isset($_POST["cep"]) && get_endereco($_POST["cep"]) == true) {
-    $endereco = get_endereco($_POST["cep"]);
-    $Rua    = $endereco->logradouro;
-    $Bairro = $endereco->bairro;
-    $Cidade = $endereco->localidade;
-    $Estado = $endereco->uf;
+    $conecta = Conecta();
 
     $mascaras_campo = array(" ",".","(",")","-");
 
@@ -25,7 +15,7 @@
     $Data_Nasc     = $_POST["data"];
     $Num           = $_POST["numero_residencial"];
     $Nome          = str_replace(" ", "", $_POST["nome"]);
-    $Sobrenome     = trim(preg_replace('/\s+/', " ", $_POST["sobrenome"]));
+    $Sobrenome     = $_POST["sobrenome"];
     $Sexo          = $_POST["sexo"];
     $Codigo_Acesso = $_POST["codigo"];
     $RG            = str_replace($mascaras_campo, "", $_POST["rg"]);
@@ -33,12 +23,11 @@
     $DDD           = intval(substr($_POST["telefone"], 1, 2));
     $Telefone      = substr(str_replace($mascaras_campo, "", $_POST["telefone"]), 2, 9);
     $Tipo_telefone = $_POST["tipo_telefone"];
+    $Rua           = $_POST["rua"];
+    $Bairro        = $_POST["bairro"];
+    $Cidade        = $_POST["cidade"];
 
-    require("../../../ConexaoSQLServer/Connection.php");
-    
-    $conecta = Conecta();
-
-    $query =  "EXEC InserirPessoa
+    $query =  "EXEC AlterarDados
                   @Email         = '{$Email}',
                   @Senha         = '{$Senha}',
                   @Data_Nasc     = '{$Data_Nasc}',
@@ -52,7 +41,6 @@
                   @DDD           = {$DDD},
                   @Telefone      = '{$Telefone}',
                   @Tipo          = '{$Tipo_telefone}',
-                  @Estado        = '{$Estado}',
                   @Cidade        = '{$Cidade}',
                   @Bairro        = '{$Bairro}',
                   @Rua           = '{$Rua}'";
@@ -61,7 +49,7 @@
       $stmt = $conecta->query($query);
 
       if ($stmt) {
-        echo "Cadastro feito com sucesso.";
+        echo "Alteração feita com sucesso.";
         echo "<br>";
       } else {
         echo "Erro na consulta ao banco.";
@@ -71,10 +59,4 @@
       echo "ERRO: " . $e->getMessage();
       exit;
     }
-        
-    $connection = null;
-  } else {
-    header("Location: ../HTML/cadastro.html");
-    die();
-  }
 ?>

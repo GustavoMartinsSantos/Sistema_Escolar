@@ -7,7 +7,7 @@
 
     $conecta = Conecta();
 
-    $query = "SELECT Nome FROM tbl_Pessoa
+    $query = "SELECT Email, Nome, Sexo FROM tbl_Pessoa
               WHERE Email = :email AND Senha = :senha";
     
     try {
@@ -23,11 +23,17 @@
 
         // transforma a consulta em um array  
         $row = $stmt->fetchAll();
+
+        // se "$row" for falso, a entrada no sistema não é feita
         if($row == false) {
           header("Location: ../HTML/index.html");
         } else {
           session_start();
-          $_SESSION['user'] = $row[0]['Nome'];
+
+          $_SESSION['user']  = $row[0]['Nome'];
+          $_SESSION['sexo']  = $row[0]['Sexo'];
+          $_SESSION['email'] = $row[0]['Email'];
+
           header("Location: ../PHP/Escolas.php");
         }
     } catch(Exception $e) {

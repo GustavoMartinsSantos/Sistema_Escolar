@@ -1,8 +1,8 @@
 function valida_form() {
-    var senha = document.getElementById("senha").value.replace(" ", "");
-    var nome  = document.getElementById("nome").value.replace(" ", "");
-    var sobrenome = document.getElementById("sobrenome").value.replace(/\s+/g, "");
-    var codigo_acesso = document.getElementById("codigo").value.replace(" ", "");
+    var senha = document.getElementById("senha").value.replace(/\s/g, "");
+    var nome  = document.getElementById("nome").value.replace(/\s/g, "");
+    var sobrenome = document.getElementById("sobrenome").value.replace(/\s+/g, " ").trim();
+    var codigo_acesso = document.getElementById("codigo").value.replace(/\s/g, "");
     
     var validacao = false;
 

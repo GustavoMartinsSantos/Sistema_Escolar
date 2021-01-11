@@ -8,8 +8,15 @@
        
        elimina a sessão e suas variáveis
        $_SESSION = false;*/
+
     if(!isset($_SESSION['user']))
         header("Location: ../HTML/index.html");
+    
+    $sexo;
+    if($_SESSION['sexo'] == 'M')
+        $sexo = 'o ';
+    else
+        $sexo = 'a ';
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +28,20 @@
     </head>
     <body>
         <header>
-            <div id="logo">Grade Yourself</div>
+            <span style="position: sticky; right: 100%; margin-left: 20px">
+                Olá, bem-vind<?php echo $sexo . $_SESSION['user'] ?>
+            </span>
+            <a href="../PHP/MeusDados.php">Minhas informações</a>
+            <a href="#" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
         </header>
+
+        <?php
+            require("../../../ConexaoSQLServer/Connection.php");
+
+            $conecta = Conecta();
+        
+            $query = "SELECT Nome FROM tbl_Pessoa
+                      WHERE Email = :email AND Senha = :senha";
+        ?>
     </body>
 </html>
