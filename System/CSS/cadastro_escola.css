@@ -1,0 +1,61 @@
+form {
+    overflow: hidden;
+    height: 400px;
+    width: 600px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    margin: 20px auto 0 auto;
+}
+
+label {
+    font-size: 18pt;
+    font-family: "Cooper Black";
+    position: absolute;
+}
+
+.label-float {
+    position: relative;
+    padding-top: 14px;
+}
+
+.label-float input{
+    border: 0;
+    border-bottom: 2px solid rgb(0, 255, 76);
+    outline: none;
+    font-size: 16pt;
+    margin-left: 3%;
+    margin-top: 3.5%;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -webkit-appearance:none;
+}
+  
+.label-float label {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 3.5%;
+    margin-top: 5%;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+}
+
+#CEP {
+    margin-left: 53%;
+}
+
+.label-float input:focus:required:invalid{
+    border-bottom: 2px solid red;
+}
+
+.label-float input:focus + label,
+.label-float input:hover + label,
+.label-float input:not(:placeholder-shown) + label{
+    font-size: 16pt;
+    margin-top: 2%;
+}
+  

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Cadastrar Escola</title>
+        <meta charset="UTF-8">
+        <link type="image/x-icon" rel="shortcut icon" href="../IMG/logo-icone.ico">
+        <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/cadastro_escola.css">
+    </head>
+    <body>
+        <header>
+            <a href="../PHP/Escolas.php"><div id="logo">Grade Yourself</div></a>
+        </header>
+        
+        <div id="titulo">Cadastrar Escola</div>
+        <form name="cadastro" method="POST" action="../PHP/Cadastro_Escola.php" 
+        onSubmit="return valida_form()">
+        <div class="label-float">
+            <input type="text" placeholder=" " required/>
+            <label for="Escola" id="Escola">Nome da Escola</label>
+
+            <input type="text" placeholder=" " required/>
+            <label for="CEP" id="CEP">CEP</label>
+        </div>
+        </form>
+    </body>
+</html>

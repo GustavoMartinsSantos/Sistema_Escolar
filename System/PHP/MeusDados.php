@@ -1,4 +1,34 @@
 <?php
+    function webClient($url) {
+        $ch = curl_init();
+   
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+   
+        $data = curl_exec($ch);
+   
+        curl_close($ch);
+   
+        return $data;
+    }
+
+    function get_cep($rua, $cidade, $uf) {
+        $rua = str_replace(" ", "%20", 
+        preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/",
+                           "/(é|è|ê|ë)/","/(É|È|Ê|Ë)/",
+                           "/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/",
+                           "/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/",
+                           "/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/"),
+        explode(" ","a A e E i I o O u U"), $rua));
+
+        $url = sprintf('https://viacep.com.br/ws/%s/%s/%s/json/ ', $uf, $cidade, $rua);
+        $result = json_decode(webClient($url));
+
+        return $result[0]->cep;
+    }
+
     session_start();
 
     if(!isset($_SESSION['user']))
@@ -11,7 +41,7 @@
     $query = "SELECT Email, Senha, Data_Nasc, Numero, Nome, 
                      Sobrenome, Sexo, Codigo_Acesso, RG, CPF,
                      Rua, Bairro, Cidade, Estado,
-                     Telefone, Tipo
+                     DDD, Telefone, Tipo
               FROM tbl_Pessoa P
                 LEFT JOIN tbl_Telefone T
                 ON T.Email_Pessoa = P.Email
@@ -28,7 +58,8 @@
         }
 
         $row = $stmt->fetchAll();
-        
+
+        $cep = get_cep($row[0]['Rua'], $row[0]['Cidade'], $row[0]['Estado']);
     } catch(Exception $e) {
         echo "ERRO: " . $e->getMessage();
         exit;
@@ -54,8 +85,8 @@
         </header>
 
         <div id="titulo">Minhas Informações</div>
-        <form name="cadastro" method="POST" action="../PHP/alterar_dados.php" 
-        onSubmit="return valida_form()" autocomplete="off">
+        <form name="cadastro" method="POST" action="Alterar_Dados.php" 
+        onSubmit="return valida_form()" autocomplete="off" id="AlterarDados">
             <label for="email" class="label">E-mail</label>
             <input type="email" class="inputs" id="email" name="email" size="31" autofocus
             value="<?php echo $row[0]['Email'] ?>" required>
@@ -75,11 +106,15 @@
             <label for="nome" class="label">Nome</label>
             <input type="text" class="inputs" id="nome" name="nome" size="32" maxlength="30"
             value="<?php echo $row[0]['Nome'] ?>" required>
+            
+            <label for="cep" class="label">CEP</label>
+            <input type="text" class="inputs" id="cep" name="cep" 
+            value="<?php echo $cep ?>" required>
 
             <label for="sobrenome" class="label">Sobrenome</label> 
             <input type="text" class="inputs" id="sobrenome" name="sobrenome" size="25" maxlength="50"
             value="<?php echo $row[0]['Sobrenome'] ?>" required>
-            
+
             <label for="rua" class="label">Rua</label>
             <input type="text" class="inputs" id="rua" name="rua" size="34" maxlength="30"
             value="<?php echo $row[0]['Rua'] ?>" required>
@@ -87,10 +122,14 @@
             <label for="bairro" class="label">Bairro</label>
             <input type="text" class="inputs" id="bairro" name="bairro" size="31" maxlength="30"
             value="<?php echo $row[0]['Bairro'] ?>" required>
-
+            
             <label for="cidade" class="label">Cidade</label>
-            <input type="text" class="inputs" id="cidade" name="cidade" size="31" maxlength="30"
+            <input type="text" class="inputs" id="cidade" name="cidade" size="30" maxlength="30"
             value="<?php echo $row[0]['Cidade'] ?>" required>
+            
+            <label for="cidade" class="label">Estado</label>
+            <input type="text" class="inputs" id="estado" name="estado" size="31" maxlength="30"
+            value="<?php echo $row[0]['Estado'] ?>" required>
             
             <label for="sexo" class="label">Sexo</label> 
                 <input type="radio" class="radios" name="sexo" value="M" id="M"
@@ -112,13 +151,13 @@
 
             <label for="telefone" class="label">Telefone</label>
             <input type="text" class="inputs" id="telefone" name="telefone" size="14" pattern=".{14,}"
-            value="<?php echo $row[0]['Telefone'] ?>">
-
+            value="<?php echo $row[0]['DDD'] . $row[0]['Telefone'] ?>">
+            
             <select class="inputs" id="tipo_telefone" name="tipo_telefone">
                 <option value='CEL'>Celular</option>
                 <option <?php echo ($row[0]['Tipo'] == 'RES') ? "selected" : null ?>
                 value='RES'>Residencial</option>
-            <select>
+            </select>
 
             <label for="cpf" class="label">CPF</label>
             <input type="text" class="inputs" id="cpf" name="cpf" size="33" pattern=".{14,}"

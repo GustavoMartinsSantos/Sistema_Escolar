@@ -31,8 +31,8 @@
             <span style="position: sticky; right: 100%; margin-left: 20px">
                 Olá, bem-vind<?php echo $sexo . $_SESSION['user'] ?>
             </span>
-            <a href="../PHP/MeusDados.php">Minhas informações</a>
-            <a href="#" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
+            <a href="MeusDados.php">Minhas informações</a>
+            <a href="../HTML/cadastro_escola.html" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
         </header>
 
         <?php
@@ -40,8 +40,7 @@
 
             $conecta = Conecta();
         
-            $query = "SELECT Nome FROM tbl_Pessoa
-                      WHERE Email = :email AND Senha = :senha";
+            $query = "";
         ?>
     </body>
 </html>

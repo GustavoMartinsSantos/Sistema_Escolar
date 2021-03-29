@@ -7,6 +7,10 @@ form {
     margin: 20px auto 0 auto;
 }
 
+#AlterarDados {
+    height: 450px;
+}
+
 .inputs {
     margin-top: 3.7%;
     margin-left: 1%;
