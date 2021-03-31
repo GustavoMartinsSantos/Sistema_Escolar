@@ -34,7 +34,7 @@
     if(!isset($_SESSION['user']))
         header("Location: ../HTML/index.html");
 
-    require("../../../ConexaoSQLServer/Connection.php");
+    require_once("../../../ConexaoSQLServer/Connection.php");
 
     $conecta = Conecta();
 
@@ -85,7 +85,7 @@
         </header>
 
         <div id="titulo">Minhas Informações</div>
-        <form name="cadastro" method="POST" action="Alterar_Dados.php" 
+        <form name="cadastro" method="POST" action="UpdatePessoa.php" 
         onSubmit="return valida_form()" autocomplete="off" id="AlterarDados">
             <label for="email" class="label">E-mail</label>
             <input type="email" class="inputs" id="email" name="email" size="31" autofocus

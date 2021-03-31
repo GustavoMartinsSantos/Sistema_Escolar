@@ -75,7 +75,7 @@
         
     $connection = null;
   } else {
-    header("Location: ../HTML/cadastro_pessoa.html");
+    header("Location: ../HTML/CadastroPessoa.html");
     die();
   }
 ?>

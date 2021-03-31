@@ -3,7 +3,7 @@
     $email = $_POST['e-mail'];
     $senha = $_POST['senha'];
 
-    require("../../../ConexaoSQLServer/Connection.php");
+    require_once("../../../ConexaoSQLServer/Connection.php");
 
     $conecta = Conecta();
 
@@ -34,7 +34,7 @@
           $_SESSION['sexo']  = $row[0]['Sexo'];
           $_SESSION['email'] = $row[0]['Email'];
 
-          header("Location: ../PHP/Escolas.php");
+          header("Location: ../PHP/Principal.php");
         }
     } catch(Exception $e) {
         echo "ERRO: " . $e->getMessage();

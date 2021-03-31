@@ -32,7 +32,7 @@
                 Olá, bem-vind<?php echo $sexo . $_SESSION['user'] ?>
             </span>
             <a href="MeusDados.php">Minhas informações</a>
-            <a href="../HTML/cadastro_escola.html" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
+            <a href="../HTML/CadastroEscola.html" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
         </header>
 
         <?php
