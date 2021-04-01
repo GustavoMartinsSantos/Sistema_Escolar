@@ -78,14 +78,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
         <script src="../JS/Validacao_Form.js"></script>
         <script src="../JS/Mascaras_Campos.js"></script>
+        <script src="../JS/Endereco.js"></script>
     </head>
     <body>
         <header>
-            <a href="Escolas.php"><div id="logo">Grade Yourself</div></a>
+            <a href="Principal.php"><div id="logo">Grade Yourself</div></a>
         </header>
 
         <div id="titulo">Minhas Informações</div>
-        <form name="cadastro" method="POST" action="UpdatePessoa.php" 
+        <form name="cadastro" method="post" action="UpdatePessoa.php" 
         onSubmit="return valida_form()" autocomplete="off" id="AlterarDados">
             <label for="email" class="label">E-mail</label>
             <input type="email" class="inputs" id="email" name="email" size="31" autofocus
@@ -109,27 +110,23 @@
             
             <label for="cep" class="label">CEP</label>
             <input type="text" class="inputs" id="cep" name="cep" 
-            value="<?php echo $cep ?>" required>
+            value="<?php echo $cep ?>" onblur="pesquisacep(this.value)" required>
 
             <label for="sobrenome" class="label">Sobrenome</label> 
             <input type="text" class="inputs" id="sobrenome" name="sobrenome" size="25" maxlength="50"
             value="<?php echo $row[0]['Sobrenome'] ?>" required>
 
             <label for="rua" class="label">Rua</label>
-            <input type="text" class="inputs" id="rua" name="rua" size="34" maxlength="30"
-            value="<?php echo $row[0]['Rua'] ?>" required>
+            <input type="text" class="inputs" id="rua" name="rua" size="34" readonly="readonly">
 
             <label for="bairro" class="label">Bairro</label>
-            <input type="text" class="inputs" id="bairro" name="bairro" size="31" maxlength="30"
-            value="<?php echo $row[0]['Bairro'] ?>" required>
+            <input type="text" class="inputs" id="bairro" name="bairro" size="31" readonly="readonly">
             
             <label for="cidade" class="label">Cidade</label>
-            <input type="text" class="inputs" id="cidade" name="cidade" size="30" maxlength="30"
-            value="<?php echo $row[0]['Cidade'] ?>" required>
+            <input type="text" class="inputs" id="cidade" name="cidade" size="30" readonly="readonly">
             
             <label for="cidade" class="label">Estado</label>
-            <input type="text" class="inputs" id="estado" name="estado" size="31" maxlength="30"
-            value="<?php echo $row[0]['Estado'] ?>" required>
+            <input type="text" class="inputs" id="estado" name="estado" size="31" readonly="readonly">
             
             <label for="sexo" class="label">Sexo</label> 
                 <input type="radio" class="radios" name="sexo" value="M" id="M"
