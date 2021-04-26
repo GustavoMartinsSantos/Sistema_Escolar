@@ -1,7 +1,7 @@
 form {
     height: 450px;
     width: 400px;
-    margin: 40px auto 0 auto;
+    margin: 15px auto 15px auto;
     border-width: 2px;
     border-style: solid;
 }
@@ -60,6 +60,8 @@ a {
     color: rgb(0, 195, 255);
     font-size: 14pt;
     font-family: "Bahnschrift SemiBold", "Arial Black", sans-serif;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 a:hover {
