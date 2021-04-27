@@ -3,7 +3,7 @@ function valida_form() {
     var nome  = document.getElementById("nome").value.replace(/\s/g, "");
     var sobrenome = document.getElementById("sobrenome").value.replace(/\s+/g, " ").trim();
     var codigo_acesso = document.getElementById("codigo").value.replace(/\s/g, "");
-    var rua = document.getElementById("rua").value;
+    var estado = document.getElementById("estado").value;
     
     var validacao = false;
 
@@ -15,7 +15,7 @@ function valida_form() {
         alert("Sobrenome inválido.");
     else if(codigo_acesso.length < 10 || codigo_acesso.length > 10 || codigo_acesso == "")
         alert("Código de acesso inválido.");
-    if(rua == "" || rua == "...")
+    else if(estado == "" || estado == "...")
         alert("Digite um CEP válido.");
     else
         validacao = true;
