@@ -10,7 +10,7 @@
        $_SESSION = false;*/
 
     if(!isset($_SESSION['user']))
-        header("Location: ../HTML/index.html");
+        header("Location: index.php");
     
     $sexo;
     if($_SESSION['sexo'] == 'M')
@@ -28,11 +28,10 @@
     </head>
     <body>
         <header>
-            <span style="position: sticky; right: 100%; margin-left: 20px">
-                Olá, bem-vind<?php echo $sexo . $_SESSION['user'] ?>
-            </span>
+            <a>Olá, bem-vind<?php echo $sexo . $_SESSION['user'] ?></a>
             <a href="MeusDados.php">Minhas informações</a>
-            <a href="../HTML/CadastroEscola.html" style="position: sticky; left: 100%; margin-right: 20px">Cadastrar uma escola</a>
+            <a href="#">Cadastrar uma escola</a>
+            <!-- FormCadastroEscola.php -->
         </header>
 
         <?php

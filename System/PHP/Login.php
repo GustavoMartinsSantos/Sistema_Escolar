@@ -23,25 +23,25 @@
 
         // transforma a consulta em um array  
         $row = $stmt->fetchAll();
-
+        
+        session_start();
         // se "$row" for falso, a entrada no sistema não é feita
         if($row == false) {
-          header("Location: ../HTML/index.html");
+          $_SESSION['invalido'] = true;
+          header("Location: index.php");
         } else {
-          session_start();
-
           $_SESSION['user']  = $row[0]['Nome'];
           $_SESSION['sexo']  = $row[0]['Sexo'];
           $_SESSION['email'] = $row[0]['Email'];
 
-          header("Location: ../PHP/Principal.php");
+          header("Location: Principal.php");
         }
     } catch(Exception $e) {
         echo "ERRO: " . $e->getMessage();
         exit;
     }
   } else {
-    header("Location: ../HTML/index.html");
+    header("Location: index.php");
     die();
   }
 ?>
