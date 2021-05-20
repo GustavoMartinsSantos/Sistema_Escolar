@@ -2,14 +2,13 @@
     session_start();
 
     if(!isset($_SESSION['user']))
-        header("Location: ../HTML/index.html");
+        header("Location: index.php");
 
     require("../../../ConexaoSQLServer/Connection.php");
 
     $conecta = Conecta();
 
     $mascaras_campo = array(" ",".","(",")","-");
-
     $Email         = $_POST["email"];
     $Senha         = str_replace(" ", "", $_POST['senha']);
     $Data_Nasc     = $_POST["data"];
@@ -20,37 +19,33 @@
     $Codigo_Acesso = $_POST["codigo"];
     $RG            = str_replace($mascaras_campo, "", $_POST["rg"]);
     $CPF           = str_replace($mascaras_campo, "", $_POST["cpf"]);
-    $DDD           = intval(substr($_POST["telefone"], 1, 2));
-    $Telefone      = substr(str_replace($mascaras_campo, "", $_POST["telefone"]), 2, 9);
-    $Tipo_telefone = $_POST["tipo_telefone"];
     $Rua           = $_POST["rua"];
     $Bairro        = $_POST["bairro"];
     $Cidade        = $_POST["cidade"];
 
-    $query =  "EXEC AlterarDados
-                  @Email         = '{$Email}',
-                  @Senha         = '{$Senha}',
-                  @Data_Nasc     = '{$Data_Nasc}',
-                  @Num           = {$Num},
-                  @Nome          = '{$Nome}',
-                  @Sobrenome     = '{$Sobrenome}',
-                  @Sexo          = '{$Sexo}',
-                  @Codigo_Acesso = '{$Codigo_Acesso}',
-                  @RG            = '{$RG}',
-                  @CPF           = '{$CPF}',
-                  @DDD           = {$DDD},
-                  @Telefone      = '{$Telefone}',
-                  @Tipo          = '{$Tipo_telefone}',
-                  @Cidade        = '{$Cidade}',
-                  @Bairro        = '{$Bairro}',
-                  @Rua           = '{$Rua}'";
+    $query =  "UPDATE tbl_Pessoa
+               SET Email         = '{$Email}',
+                   Senha         = '{$Senha}',
+                   Data_Nasc     = '{$Data_Nasc}',
+                   Numero        = {$Num},
+                   Nome          = '{$Nome}',
+                   Sobrenome     = '{$Sobrenome}',
+                   Sexo          = '{$Sexo}',
+                   Codigo_Acesso = '{$Codigo_Acesso}',
+                   RG            = '{$RG}',
+                   CPF           = '{$CPF}',
+                   Cidade        = '{$Cidade}',
+                   Bairro        = '{$Bairro}',
+                   Rua           = '{$Rua}'
+               WHERE Email = '{$Email}'";
 
     try {
-      $stmt = $conecta->query($query);
-
+      $stmt = $conecta->prepare($query);
+      $stmt->execute();
+      
       if ($stmt) {
-        echo "Alteração feita com sucesso.";
-        echo "<br>";
+        $_SESSION['valido'] = true;
+        header("location: MeusDados.php");
       } else {
         echo "Erro na consulta ao banco.";
         echo "<br>";
